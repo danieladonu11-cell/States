@@ -1,6 +1,9 @@
 package com.example.columnapplication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,25 +29,60 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import com.example.columnapplication.ui.theme.ColumnApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            app()
+            ViewContainer()
         }
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
-fun app() {
+fun ViewContainer(){
+Scaffold(topBar = { Toolbar() }, content = { Content() }, floatingActionButton = {FAB()},
+    floatingActionButtonPosition = FabPosition.End)
+}
+
+
+@Composable
+fun FAB(){
+    val context = LocalContext.current
+    FloatingActionButton(onClick = { Toast.makeText(context,
+        "Practica 5", Toast.LENGTH_SHORT).show()
+    }){
+        Text("X")
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun Toolbar(){
+    Column {
+        TopAppBar(
+            title = { Text(text = "ÑODUSS", color = colorResource(id = R.color.White)) },
+            background = colorResource(id = R.color.background)
+        )
+    }
+}
+
+@Composable
+fun Content() {
     var counter by rememberSaveable { mutableStateOf(value=0) }
     LazyColumn (
         modifier = Modifier
@@ -53,7 +91,9 @@ fun app() {
     ) {
         item {
             Image(
-                modifier = Modifier.fillMaxWidth().height(400.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp),
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = null
             )
@@ -75,7 +115,9 @@ fun app() {
             Text(text = "Doñuuuuuu")
             Text(text = "Bolteadaaaa")
             LazyRow (horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(16.dp)){
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)){
                 item {
                     Text(text = "Java", color = Color.Black)
                     Text(text = "C++", color = Color.Black)
