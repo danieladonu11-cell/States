@@ -32,6 +32,11 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
+private val Morado = Color(0xFF6726B5)
+private val MoradoClaro = Color(0xFFF0E8FA)
+private val TextoOscuro = Color(0xFF151B35)
+private val TextoSecundario = Color(0xFF586174)
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,281 +57,362 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MiPerfilApp() {
 
-    var mostrarMenu by remember { mutableStateOf(false) }
-
-    val morado = Color(0xFF6750A4)
-    val rojo = Color(0xFFE53935)
-    val panel = Color.Black.copy(alpha = 0.62f)
+    var mostrarMenu by remember {
+        mutableStateOf(false)
+    }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFFAF9FD))
     ) {
 
-        // FONDO COMPLETO
-        Image(
-            painter = painterResource(R.drawable.fondo),
-            contentDescription = "Fondo de pantalla",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
-        // CONTENIDO PRINCIPAL
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 110.dp)
+                .padding(bottom = 100.dp)
         ) {
 
-            // PORTADA
+            // ENCABEZADO: UNA SOLA IMAGEN DE FONDO
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(205.dp)
+                    .height(295.dp)
             ) {
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                        .background(Color.Black.copy(alpha = 0.22f))
-                )
-
-                Text(
-                    text = "MI PERFIL",
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .padding(top = 22.dp),
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                // LINEA A LA DERECHA DE LA FOTO
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(start = 134.dp, top = 145.dp)
-                        .fillMaxWidth()
-                        .height(2.dp)
-                        .background(Color.White)
-                )
-
-                // FOTO DE PERFIL
+                // Fotografía de la UPP: solo aparece una vez
                 Image(
-                    painter = painterResource(R.drawable.perfil),
-                    contentDescription = "Foto de perfil",
+                    painter = painterResource(R.drawable.fondo),
+                    contentDescription = "Universidad Politécnica de Pachuca",
                     modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(start = 22.dp, top = 90.dp)
-                        .size(92.dp)
-                        .clip(CircleShape)
-                        .background(Color.White)
-                        .padding(4.dp)
-                        .clip(CircleShape),
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .align(Alignment.TopCenter),
                     contentScale = ContentScale.Crop
                 )
-            }
 
-            // NOMBRE Y CORREO
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(panel)
-                    .padding(14.dp)
-            ) {
-
-                Text(
-                    text = "Daniela Doñu Bolteada",
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "donudaniela250@gmail.com",
-                    fontSize = 14.sp,
-                    color = Color.White
-                )
-            }
-
-            Spacer(modifier = Modifier.height(18.dp))
-
-            // ABOUT Y LENGUAJES
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(panel)
-                    .padding(14.dp)
-            ) {
-
-                Text(
-                    text = "",
-                    fontSize = 21.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "Hola, soy estudiante de la UPP y me interesa la tecnología, " +
-                            "la programación . " +
-                            "Soy tecnico en programación y me gusta aprender más para mejorar.",
-                    fontSize = 14.sp,
-                    color = Color.White,
-                    lineHeight = 21.sp
-                )
-
-                Spacer(modifier = Modifier.height(18.dp))
-
-                // LENGUAJES
-                Row(
+                // Identificación de la universidad
+                Surface(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        .align(Alignment.TopStart)
+                        .padding(start = 18.dp, top = 24.dp),
+                    shape = RoundedCornerShape(30.dp),
+                    color = Color.White.copy(alpha = 0.94f)
                 ) {
+                    Row(
+                        modifier = Modifier.padding(
+                            horizontal = 14.dp,
+                            vertical = 10.dp
+                        ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "UPP",
+                            color = Morado,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
 
-                    val lenguajes = listOf(
-                        "HTML",
-                        "CSS",
-                        "Java",
-                        "Kotlin",
-                        "C++",
-                        "PHP",
-                        "JavaScript",
-                        "SQL",
-                        "Python",
-                        "Laravel"
-                    )
+                        Spacer(Modifier.width(10.dp))
 
-                    lenguajes.forEach { lenguaje ->
-
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(Color.White)
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 10.dp
-                                )
-                        ) {
+                        Column {
+                            Text(
+                                text = "Universidad Politécnica",
+                                color = TextoOscuro,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold
+                            )
 
                             Text(
-                                text = lenguaje,
-                                color = morado,
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold
+                                text = "de Pachuca",
+                                color = TextoOscuro,
+                                fontSize = 11.sp
                             )
                         }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // UBICACION Y MAPA
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(panel)
-                    .padding(14.dp)
-            ) {
-
-                Text(
-                    text = "Mi ubicación",
-                    fontSize = 21.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Card(
+                // Etiqueta UPP Software
+                Surface(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    shape = RoundedCornerShape(12.dp)
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 20.dp, bottom = 112.dp),
+                    shape = RoundedCornerShape(30.dp),
+                    color = MoradoClaro
                 ) {
+                    Text(
+                        text = "UPP Pachuca",
+                        color = Morado,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(
+                            horizontal = 16.dp,
+                            vertical = 10.dp
+                        )
+                    )
+                }
 
-                    MapaOpenStreetMap(
-                        modifier = Modifier.fillMaxSize()
+                // Etiqueta de la carrera
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 20.dp, bottom = 12.dp),
+                    shape = RoundedCornerShape(30.dp),
+                    color = MoradoClaro
+                ) {
+                    Text(
+                        text = "Ingeniería TIID",
+                        color = Morado,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(
+                            horizontal = 13.dp,
+                            vertical = 8.dp
+                        )
+                    )
+                }
+
+                // FOTO DE PERFIL CIRCULAR
+                // 70 dp arriba y 70 dp abajo del límite del fondo
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .offset(x = 25.dp, y = 155.dp)
+                        .size(140.dp)
+                        .clip(CircleShape)
+                        .background(Color.White)
+                        .padding(5.dp)
+                        .clip(CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.perfil),
+                        contentDescription = "Foto de perfil de Daniela",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            // DATOS PERSONALES
+            Column(
+                modifier = Modifier.padding(
+                    start = 24.dp,
+                    end = 24.dp,
+                    top = 4.dp
+                )
+            ) {
+
+                Text(
+                    text = "Daniela Doñu Bolteada",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = TextoOscuro,
+                    lineHeight = 31.sp
+                )
+
+                Spacer(Modifier.height(6.dp))
+
+                Text(
+                    text = "Ingeniería en Tecnologías de Información e Innovación Digital",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Morado,
+                    lineHeight = 21.sp
+                )
+
+                Spacer(Modifier.height(5.dp))
+
+                Text(
+                    text = "Cuarto cuatrimestre",
+                    fontSize = 13.sp,
+                    color = TextoSecundario
+                )
+
+                Spacer(Modifier.height(10.dp))
+
+                Text(
+                    text = "Estudiante de la Universidad Politécnica de Pachuca, " +
+                            "con interés en el desarrollo de aplicaciones, " +
+                            "Tecnico en Programacion.",
+                    fontSize = 15.sp,
+                    color = TextoSecundario,
+                    lineHeight = 23.sp
+                )
+            }
+
+            Spacer(Modifier.height(26.dp))
+
+            // TÍTULO DE LENGUAJES
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    text = "</>",
+                    color = Morado,
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.ExtraBold
+                )
+
+                Spacer(Modifier.width(10.dp))
+
+                Text(
+                    text = "LENGUAJES DE PROGRAMACIÓN",
+                    color = TextoOscuro,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.ExtraBold
+                )
+
+                Spacer(Modifier.weight(1f))
+
+                Text(
+                    text = "Desliza →",
+                    color = Color(0xFF8992A8),
+                    fontSize = 11.sp
+                )
+            }
+
+            Spacer(Modifier.height(15.dp))
+
+            // LENGUAJES SOLAMENTE CON TEXTO
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+
+                val lenguajes = listOf(
+                    "Python",
+                    "Java",
+                    "Kotlin",
+                    "C#",
+                    "C++",
+                    "HTML",
+                    "CSS",
+                    "PHP",
+                    "JavaScript",
+                    "SQL"
+                )
+
+                lenguajes.forEach { lenguaje ->
+
+                    Surface(
+                        shape = RoundedCornerShape(30.dp),
+                        color = MoradoClaro
+                    ) {
+                        Text(
+                            text = lenguaje,
+                            color = TextoOscuro,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(
+                                horizontal = 20.dp,
+                                vertical = 12.dp
+                            )
+                        )
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(30.dp))
+
+            // UBICACIÓN
+            Text(
+                text = "Mi ubicación",
+                modifier = Modifier.padding(horizontal = 24.dp),
+                color = TextoOscuro,
+                fontSize = 19.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            // MAPA EN RECUADRO
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .height(230.dp),
+                shape = RoundedCornerShape(22.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFE9E9E9)
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 2.dp
+                )
+            ) {
+                MapaOpenStreetMap(
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            Spacer(Modifier.height(30.dp))
         }
 
-        // NAVBAR INFERIOR
+        // MENÚ INFERIOR
         if (mostrarMenu) {
 
-            Card(
+            Surface(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(
-                        start = 8.dp,
-                        end = 8.dp,
-                        bottom = 60.dp
+                        start = 14.dp,
+                        end = 14.dp,
+                        bottom = 75.dp
                     ),
-                shape = RoundedCornerShape(25.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White
-                ),
-                elevation = CardDefaults.cardElevation(8.dp)
+                shape = RoundedCornerShape(30.dp),
+                color = Color.White,
+                shadowElevation = 10.dp
             ) {
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState())
-                        .padding(14.dp),
-                    horizontalArrangement = Arrangement.spacedBy(22.dp),
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
-                    Text("Inicio", color = morado)
-                    Text("Perfil", color = morado)
-                    Text("About", color = morado)
-                    Text("Lenguajes", color = morado)
-                    Text("Mapa", color = morado)
+                    Text("Inicio", color = Morado, fontWeight = FontWeight.Bold)
+                    Text("Perfil", color = Morado, fontWeight = FontWeight.Bold)
+                    Text("About", color = Morado, fontWeight = FontWeight.Bold)
+                    Text("Lenguajes", color = Morado, fontWeight = FontWeight.Bold)
+                    Text("Mapa", color = Morado, fontWeight = FontWeight.Bold)
                 }
             }
         }
 
-        // BOTON PARA MOSTRAR Y OCULTAR NAVBAR
+        // BOTÓN FLOTANTE
         FloatingActionButton(
             onClick = {
                 mostrarMenu = !mostrarMenu
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
-                .size(42.dp),
-            containerColor = rojo,
+                .padding(20.dp)
+                .size(62.dp),
+            containerColor = Morado,
             contentColor = Color.White,
             shape = CircleShape
         ) {
-
             Text(
-                text = if (mostrarMenu) "−" else "+",
-                fontSize = 25.sp
+                text = if (mostrarMenu) "×" else "+",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Light
             )
         }
     }
 }
 
-// MAPA REAL CON OPENSTREETMAP Y OSMdroid
+// MAPA DE LA UNIVERSIDAD POLITÉCNICA DE PACHUCA
 @Composable
 fun MapaOpenStreetMap(
     modifier: Modifier = Modifier
@@ -335,28 +421,23 @@ fun MapaOpenStreetMap(
     if (LocalInspectionMode.current) {
 
         Box(
-            modifier = modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color(0xFFE8E6D9)),
+            modifier = modifier.background(Color(0xFFEAEAEA)),
             contentAlignment = Alignment.Center
         ) {
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                Text("📍", fontSize = 35.sp)
-
                 Text(
-                    text = "Pachuca de Soto, Hidalgo",
-                    color = Color.DarkGray,
+                    text = "Universidad Politécnica de Pachuca",
+                    color = TextoOscuro,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
                     text = "Vista previa del mapa",
-                    color = Color.DarkGray,
-                    fontSize = 12.sp
+                    color = TextoSecundario,
+                    fontSize = 11.sp
                 )
             }
         }
@@ -373,14 +454,22 @@ fun MapaOpenStreetMap(
                     setTileSource(TileSourceFactory.MAPNIK)
                     setMultiTouchControls(true)
 
-                    val ubicacion = GeoPoint(20.1011, -98.7591)
 
-                    controller.setZoom(15.0)
-                    controller.setCenter(ubicacion)
+                    val ubicacionUPP = GeoPoint(
+                        19.98007,
+                        -98.6853
+                    )
+
+                    controller.setZoom(17.0)
+                    controller.setCenter(ubicacionUPP)
 
                     val marcador = Marker(this).apply {
-                        position = ubicacion
-                        title = "Mi ubicación - Pachuca"
+
+                        position = ubicacionUPP
+
+                        title = "Universidad Politécnica de Pachuca"
+
+                        snippet = "Ex-Hacienda de Santa Bárbara, Zempoala, Hidalgo"
 
                         setAnchor(
                             Marker.ANCHOR_CENTER,
